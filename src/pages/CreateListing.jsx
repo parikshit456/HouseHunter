@@ -31,6 +31,7 @@ const CreateListing = () => {
     images: {},
     latitude: 0,
     longitude: 0,
+    listingEnabled: true,
   });
 
   const {
@@ -47,6 +48,7 @@ const CreateListing = () => {
     images,
     latitude,
     longitude,
+    listingEnabled,
   } = formData;
 
   const auth = getAuth();
@@ -159,7 +161,7 @@ const CreateListing = () => {
     formDataCopy.location = address;
     delete formDataCopy.images;
     delete formDataCopy.address;
-    location && (formDataCopy.location = location);
+    // location && (formDataCopy.location = location);
 
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
 

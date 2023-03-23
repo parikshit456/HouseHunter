@@ -18,6 +18,7 @@ const Category = () => {
   const [listing, setListing] = useState([]);
   const [loading, setLoading] = useState(true);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
+  const [loadMoreState, setLoadMoreState] = useState(false);
   const params = useParams();
 
   useEffect(() => {
@@ -46,6 +47,9 @@ const Category = () => {
         });
         console.log(listings);
         setListing(listings);
+        if (listing.length > 10) {
+          setLoadMoreState(true);
+        }
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -104,11 +108,13 @@ const Category = () => {
             <ul className="categoryListings">
               {listing.map((listing) => {
                 return (
-                  <ListingItem
-                    listing={listing.data}
-                    id={listing.id}
-                    key={listing.id}
-                  />
+                  listing.data.listingEnabled && (
+                    <ListingItem
+                      listing={listing.data}
+                      id={listing.id}
+                      key={listing.id}
+                    />
+                  )
                 );
               })}
             </ul>
@@ -116,7 +122,7 @@ const Category = () => {
           <br />
           <br />
 
-          {lastFetchedListing && (
+          {loadMoreState && lastFetchedListing && (
             <p className="loadMore" onClick={onFetchMoreListing}>
               Load More
             </p>

@@ -32,6 +32,7 @@ const EditListing = () => {
     images: {},
     latitude: 0,
     longitude: 0,
+    listingEnabled: true,
   });
 
   const {
@@ -48,6 +49,7 @@ const EditListing = () => {
     images,
     latitude,
     longitude,
+    listingEnabled,
   } = formData;
 
   const auth = getAuth();
@@ -71,6 +73,7 @@ const EditListing = () => {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setListing(docSnap.data());
+        console.log(docSnap.data());
         setFormData({
           ...docSnap.data(),
           address: docSnap.data().location,
@@ -109,9 +112,9 @@ const EditListing = () => {
     e.preventDefault();
     // console.log(formData);
     setLoading(true);
-    console.log(discountedPrice, regularPrice);
-    console.log(discountedPrice >= regularPrice);
-    console.log(discountedPrice - regularPrice);
+    // console.log(discountedPrice, regularPrice);
+    // console.log(discountedPrice >= regularPrice);
+    // console.log(discountedPrice - regularPrice);
     if (discountedPrice - regularPrice >= 0) {
       setLoading(false);
       toast.error("Discounted price should be less than regular price");
@@ -177,6 +180,7 @@ const EditListing = () => {
       [...images].map((image) => storeImage(image))
     ).catch(() => {
       setLoading(false);
+
       toast.error("Images not uploaded");
     });
 
@@ -192,7 +196,7 @@ const EditListing = () => {
     formDataCopy.location = address;
     delete formDataCopy.images;
     delete formDataCopy.address;
-    location && (formDataCopy.location = location);
+    // location && (formDataCopy.location = location);
 
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
 

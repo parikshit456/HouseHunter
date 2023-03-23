@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap");
 * {
   box-sizing: border-box;
+  padding: 0px;
 }
 
 html::-webkit-scrollbar {
@@ -341,7 +342,7 @@ button {
 .swiperSlideText {
   color: #ffffff;
   position: absolute;
-  top: 70px;
+  top: 123px;
   left: 0;
   font-weight: 600;
   max-width: 90%;
@@ -351,6 +352,8 @@ button {
 }
 @media (min-width: 1024px) {
   .swiperSlideText {
+    position: absolute;
+    top: 183px;
     font-size: 1.75rem;
   }
 }
@@ -358,7 +361,7 @@ button {
 .swiperSlidePrice {
   color: #000000;
   position: absolute;
-  top: 143px;
+  top: 175px;
   left: 11px;
   font-weight: 600;
   max-width: 90%;
@@ -368,6 +371,8 @@ button {
 }
 @media (min-width: 1024px) {
   .swiperSlidePrice {
+    position: absolute;
+    top: 250px;
     font-size: 1.25rem;
   }
 }
@@ -419,6 +424,7 @@ button {
   height: 100px;
   border-radius: 1.5rem;
   object-fit: cover;
+  margin-right: 10px;
 }
 @media (min-width: 1024px) {
   .categoryListingImg {
@@ -486,6 +492,10 @@ button {
 
 .listingDetails {
   margin-bottom: 10rem;
+}
+.spacer {
+  margin-bottom: 110px; /* how high is your footer */
+  visibility: hidden;
 }
 
 .shareIconDiv {

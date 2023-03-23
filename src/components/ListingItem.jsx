@@ -1,14 +1,40 @@
 import { Link } from "react-router-dom";
 import { ReactComponent as DeleteIcon } from "../assets/svg/deleteIcon.svg";
 import { ReactComponent as EditIcon } from "../assets/svg/editIcon.svg";
+import Switch from "react-switch";
 
 import bedIcon from "../assets/svg/bedIcon.svg";
 import bathtubIcon from "../assets/svg/bathtubIcon.svg";
 
-import React from "react";
+import React, { useState } from "react";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase.config";
+import { toast } from "react-toastify";
 
-const ListingItem = ({ listing, id, onDelete, onEdit }) => {
+const ListingItem = ({ listing, id, onDelete, onEdit, onList }) => {
   console.log(listing);
+  const { listingEnabled } = listing;
+  const [isEnabled, setIsEnabled] = useState(listingEnabled);
+  console.log(isEnabled);
+
+  const [formData, setFormData] = useState({ ...listing });
+
+  const handleChange = async () => {
+    const docRef = doc(db, "listings", id);
+    if (formData.listingEnabled === true) {
+      formData.listingEnabled = false;
+      setIsEnabled(false);
+    } else {
+      formData.listingEnabled = true;
+      setIsEnabled(true);
+    }
+    await updateDoc(docRef, formData);
+    if (formData.listingEnabled === true) {
+      toast.success("List is active");
+    } else {
+      toast.success("List is not active");
+    }
+  };
   return (
     <li className="categoryListing">
       <Link
@@ -61,6 +87,16 @@ const ListingItem = ({ listing, id, onDelete, onEdit }) => {
         />
       )}
       {onEdit && <EditIcon className="editIcon" onClick={() => onEdit(id)} />}
+      {onList && (
+        <Switch
+          onChange={handleChange}
+          checked={isEnabled}
+          height={22}
+          width={44}
+          handleDiameter={18}
+          // className="editList"
+        />
+      )}
     </li>
   );
 };
