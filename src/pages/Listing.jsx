@@ -4,12 +4,18 @@ import { getDoc, doc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "../firebase.config";
 import Spinner from "../components/Spinner";
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import SwiperCore, {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import shareIcon from "../assets/svg/shareIcon.svg";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 
 const Listing = () => {
   const [listing, setListing] = useState(null);
@@ -39,7 +45,16 @@ const Listing = () => {
   }
   return (
     <main>
-      <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+      <Swiper
+        slidesPerView={1}
+        pagination={{ clickable: true }}
+        loop={true}
+        autoplay={{
+          delay: 3000,
+          pauseOnMouseEnter: true,
+          disableOnInteraction: false,
+        }}
+      >
         {listing.imgUrls.map((url, index) => (
           <SwiperSlide key={index}>
             <div

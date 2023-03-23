@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { db } from "../firebase.config";
-import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import SwiperCore, {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import Spinner from "./Spinner";
-SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay]);
 
 const Slider = () => {
   const [loading, setLoading] = useState(true);
@@ -47,7 +53,16 @@ const Slider = () => {
     listings && (
       <>
         <p className="exploreHeading">Recommended</p>
-        <Swiper slidesPerView={1} pagination={{ clickable: true }}>
+        <Swiper
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          loop={true}
+          autoplay={{
+            delay: 3000,
+            pauseOnMouseEnter: true,
+            disableOnInteraction: false,
+          }}
+        >
           {listings.map(
             ({ data, id }) =>
               data.listingEnabled && (
